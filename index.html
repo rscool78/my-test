@@ -1,11 +1,480 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-    <title>My Image Page</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="Professional services to help your business grow." />
+  <title>Your Business Name | Home</title>
+  <style>
+    :root{
+      --bg:#0b1220;
+      --panel:#0f1a30;
+      --text:#e9eefc;
+      --muted:#b7c4ea;
+      --brand:#5eead4;
+      --brand2:#60a5fa;
+      --border:rgba(255,255,255,.12);
+      --shadow:0 12px 30px rgba(0,0,0,.35);
+      --radius:18px;
+      --max:1120px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font:16px/1.55 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(1100px 500px at 20% -10%, rgba(96,165,250,.25), transparent 60%),
+        radial-gradient(900px 500px at 80% 0%, rgba(94,234,212,.18), transparent 60%),
+        linear-gradient(180deg, #070b14, var(--bg));
+    }
+    a{color:inherit;text-decoration:none}
+    .container{max-width:var(--max);margin:0 auto;padding:0 20px}
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:10px;
+      padding:12px 16px;border-radius:14px;border:1px solid var(--border);
+      background:linear-gradient(135deg, rgba(94,234,212,.18), rgba(96,165,250,.18));
+      color:var(--text);font-weight:600;box-shadow:var(--shadow);
+      transition:transform .15s ease, filter .15s ease, background .2s ease;
+    }
+    .btn:hover{transform:translateY(-1px);filter:brightness(1.08)}
+    .btn.secondary{
+      background:transparent;box-shadow:none;
+    }
+    .pill{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:6px 12px;border-radius:999px;border:1px solid var(--border);
+      background:rgba(255,255,255,.06);color:var(--muted);font-weight:600;font-size:13px;
+    }
+    header{
+      position:sticky;top:0;z-index:50;
+      backdrop-filter:blur(10px);
+      background:rgba(7,11,20,.55);
+      border-bottom:1px solid var(--border);
+    }
+    .nav{
+      display:flex;align-items:center;justify-content:space-between;
+      padding:14px 0;
+    }
+    .brand{
+      display:flex;align-items:center;gap:12px;font-weight:800;letter-spacing:.3px;
+    }
+    .logo{
+      width:38px;height:38px;border-radius:14px;
+      background:linear-gradient(135deg,var(--brand),var(--brand2));
+      box-shadow:0 10px 20px rgba(96,165,250,.25);
+    }
+    nav ul{list-style:none;display:flex;gap:18px;margin:0;padding:0}
+    nav a{color:var(--muted);font-weight:650}
+    nav a:hover{color:var(--text)}
+    .nav-cta{display:flex;gap:10px;align-items:center}
+    .mobile-toggle{display:none}
+
+    /* Hero */
+    .hero{
+      padding:56px 0 22px;
+    }
+    .hero-grid{
+      display:grid;grid-template-columns:1.25fr .75fr;gap:22px;align-items:stretch;
+    }
+    .card{
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.06);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+    }
+    .hero-main{padding:26px}
+    h1{margin:14px 0 10px;font-size:44px;line-height:1.1;letter-spacing:-.8px}
+    .sub{color:var(--muted);font-size:18px;max-width:60ch;margin:0 0 18px}
+    .hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+    .metrics{
+      display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:22px
+    }
+    .metric{
+      padding:14px;border:1px solid var(--border);border-radius:16px;background:rgba(0,0,0,.18)
+    }
+    .metric b{display:block;font-size:18px}
+    .metric span{color:var(--muted);font-size:13px}
+
+    .hero-side{padding:20px}
+    .side-title{margin:0 0 10px;font-weight:800}
+    .checklist{margin:0;padding:0;list-style:none;display:grid;gap:10px}
+    .check{
+      display:flex;gap:10px;align-items:flex-start;
+      padding:12px;border:1px solid var(--border);border-radius:16px;background:rgba(0,0,0,.16)
+    }
+    .dot{
+      width:22px;height:22px;border-radius:10px;
+      background:linear-gradient(135deg,var(--brand),var(--brand2));
+      flex:0 0 auto;margin-top:2px
+    }
+    .check p{margin:0;color:var(--muted);font-size:14px}
+
+    /* Sections */
+    section{padding:46px 0}
+    .section-head{
+      display:flex;justify-content:space-between;align-items:flex-end;gap:12px;margin-bottom:18px;
+    }
+    h2{margin:0;font-size:28px;letter-spacing:-.4px}
+    .lead{margin:0;color:var(--muted);max-width:70ch}
+
+    .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    .service{padding:18px}
+    .service h3{margin:10px 0 6px}
+    .service p{margin:0;color:var(--muted)}
+    .icon{
+      width:42px;height:42px;border-radius:16px;border:1px solid var(--border);
+      background:rgba(0,0,0,.18);display:grid;place-items:center;font-weight:900
+    }
+
+    .split{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:stretch}
+    .about{padding:22px}
+    .about p{color:var(--muted);margin:10px 0 0}
+    .about ul{color:var(--muted)}
+    .quote{padding:22px}
+    .quote blockquote{margin:0;color:var(--text);font-size:18px}
+    .quote cite{display:block;margin-top:10px;color:var(--muted);font-style:normal}
+
+    .testimonials{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    .t{padding:18px}
+    .t p{margin:0;color:var(--muted)}
+    .t b{display:block;margin-top:12px}
+
+    .pricing{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    .plan{padding:20px}
+    .price{font-size:34px;font-weight:900;margin:10px 0}
+    .plan ul{margin:0;padding-left:18px;color:var(--muted)}
+    .plan .btn{width:100%;margin-top:14px}
+
+    .contact{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    form{padding:22px}
+    label{display:block;font-size:13px;color:var(--muted);margin:12px 0 6px}
+    input, textarea{
+      width:100%;padding:12px 12px;border-radius:14px;
+      border:1px solid var(--border);background:rgba(0,0,0,.18);color:var(--text);
+      outline:none;
+    }
+    textarea{min-height:120px;resize:vertical}
+    .contact-info{padding:22px}
+    .contact-info p{color:var(--muted);margin:10px 0}
+    .info-row{display:flex;gap:10px;align-items:center;margin-top:10px;color:var(--muted)}
+    .badge{display:inline-flex;align-items:center;gap:8px;margin-top:12px}
+
+    footer{
+      border-top:1px solid var(--border);
+      padding:26px 0;color:var(--muted)
+    }
+    .foot{
+      display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center
+    }
+
+    /* Responsive */
+    @media (max-width: 980px){
+      .hero-grid{grid-template-columns:1fr}
+      .grid3,.testimonials,.pricing{grid-template-columns:1fr}
+      .split,.contact{grid-template-columns:1fr}
+      h1{font-size:38px}
+      nav ul{display:none}
+      .mobile-toggle{display:inline-flex}
+    }
+  </style>
 </head>
+
 <body>
-    <h1>Check out my image!</h1>
-    <!-- Replace 'my-picture.jpg' with the actual filename of your uploaded image -->
-    <img src="download_1.jpg" alt="Description of the image" style="max-width: 100%;">
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <div>
+          <div style="font-size:15px;">Your Business Name</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:-2px;">Tagline goes here</div>
+        </div>
+      </div>
+
+      <nav aria-label="Primary">
+        <ul>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-cta">
+        <a class="btn secondary" href="#contact">Get a Quote</a>
+        <a class="btn" href="#contact">Book a Call</a>
+        <a class="btn secondary mobile-toggle" href="#services" aria-label="Skip to services">Menu</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="card hero-main">
+          <span class="pill">★ Trusted by teams • Fast turnaround • Clear pricing</span>
+          <h1>We help you launch, scale, and secure your business.</h1>
+          <p class="sub">
+            A modern, responsive business website template you can deploy in minutes.
+            Swap the copy, add your logo, and you’re live.
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn" href="#contact">Request a Quote</a>
+            <a class="btn secondary" href="#services">Explore Services</a>
+          </div>
+
+          <div class="metrics" role="list">
+            <div class="metric" role="listitem">
+              <b>24–48h</b><span>Typical response</span>
+            </div>
+            <div class="metric" role="listitem">
+              <b>99.9%</b><span>Uptime-ready setup</span>
+            </div>
+            <div class="metric" role="listitem">
+              <b>Clear</b><span>Scope & deliverables</span>
+            </div>
+          </div>
+        </div>
+
+        <aside class="card hero-side" aria-label="Highlights">
+          <h3 class="side-title">What you get</h3>
+          <ul class="checklist">
+            <li class="check">
+              <div class="dot" aria-hidden="true"></div>
+              <div>
+                <b>Professional web presence</b>
+                <p>Clean design with sections that convert visitors into leads.</p>
+              </div>
+            </li>
+            <li class="check">
+              <div class="dot" aria-hidden="true"></div>
+              <div>
+                <b>Mobile-first layout</b>
+                <p>Looks great on phones, tablets, laptops, and ultrawides.</p>
+              </div>
+            </li>
+            <li class="check">
+              <div class="dot" aria-hidden="true"></div>
+              <div>
+                <b>Easy customization</b>
+                <p>All styling is in this file—no frameworks required.</p>
+              </div>
+            </li>
+          </ul>
+        </aside>
+      </div>
+    </section>
+
+    <section id="services">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>Services</h2>
+            <p class="lead">Replace these with your offerings. Keep them outcome-focused.</p>
+          </div>
+          <span class="pill">Flexible packages</span>
+        </div>
+
+        <div class="grid3">
+          <div class="card service">
+            <div class="icon" aria-hidden="true">⚡</div>
+            <h3>Consulting</h3>
+            <p>Strategy, roadmaps, and technical guidance to unblock growth.</p>
+          </div>
+
+          <div class="card service">
+            <div class="icon" aria-hidden="true">🔒</div>
+            <h3>Security</h3>
+            <p>Hardening, reviews, and best practices for safer operations.</p>
+          </div>
+
+          <div class="card service">
+            <div class="icon" aria-hidden="true">📈</div>
+            <h3>Analytics</h3>
+            <p>Dashboards and insights to drive measurable decisions.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>About</h2>
+            <p class="lead">A quick story about your business and what makes you different.</p>
+          </div>
+          <span class="pill">Reliable • Transparent • Results</span>
+        </div>
+
+        <div class="split">
+          <div class="card about">
+            <h3>Our mission</h3>
+            <p>
+              We deliver high-quality work with clear communication—so you know exactly what you’re getting,
+              when you’re getting it, and how it moves your goals forward.
+            </p>
+
+            <h3 style="margin-top:16px;">What we value</h3>
+            <ul>
+              <li>Simple solutions over unnecessary complexity</li>
+              <li>Security and quality built in from day one</li>
+              <li>Documentation you can hand to your team</li>
+            </ul>
+          </div>
+
+          <div class="card quote">
+            <blockquote>
+              “This team delivered ahead of schedule and made everything easy to understand. We saw results immediately.”
+            </blockquote>
+            <cite>— Client Name, Company</cite>
+
+            <div class="badge pill" style="margin-top:14px;">
+              ✅ Licensed / Certified • ✅ Insured (optional) • ✅ References available
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section aria-label="Testimonials">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>Testimonials</h2>
+            <p class="lead">Swap these for real client feedback or remove the section.</p>
+          </div>
+          <span class="pill">5-star support</span>
+        </div>
+
+        <div class="testimonials">
+          <div class="card t">
+            <p>“Fast, professional, and thorough. Exactly what we needed.”</p>
+            <b>— Client A</b>
+          </div>
+          <div class="card t">
+            <p>“Clear plan, clean execution, and great communication.”</p>
+            <b>— Client B</b>
+          </div>
+          <div class="card t">
+            <p>“Helped us simplify our stack and reduce recurring issues.”</p>
+            <b>— Client C</b>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="pricing">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>Pricing</h2>
+            <p class="lead">Simple tiers. Replace with your real pricing or remove.</p>
+          </div>
+          <span class="pill">No hidden fees</span>
+        </div>
+
+        <div class="pricing">
+          <div class="card plan">
+            <h3>Starter</h3>
+            <div class="price">$499</div>
+            <ul>
+              <li>Single-page website</li>
+              <li>Basic contact form</li>
+              <li>1 revision round</li>
+            </ul>
+            <a class="btn" href="#contact">Choose Starter</a>
+          </div>
+
+          <div class="card plan" style="border-color:rgba(94,234,212,.35)">
+            <h3>Growth</h3>
+            <div class="price">$1,499</div>
+            <ul>
+              <li>Multi-section layout</li>
+              <li>SEO basics + analytics</li>
+              <li>2 revision rounds</li>
+            </ul>
+            <a class="btn" href="#contact">Choose Growth</a>
+          </div>
+
+          <div class="card plan">
+            <h3>Custom</h3>
+            <div class="price">Let’s talk</div>
+            <ul>
+              <li>Custom pages & integrations</li>
+              <li>Security + performance review</li>
+              <li>Ongoing support options</li>
+            </ul>
+            <a class="btn" href="#contact">Request Custom</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>Contact</h2>
+            <p class="lead">Hook this form up to your backend later. For now it’s a clean frontend template.</p>
+          </div>
+          <span class="pill">Response within 1 business day</span>
+        </div>
+
+        <div class="contact">
+          <form class="card" onsubmit="event.preventDefault(); alert('Thanks! Replace this with your form handler.');">
+            <label for="name">Name</label>
+            <input id="name" name="name" placeholder="Jane Doe" required />
+
+            <label for="email">Email</label>
+            <input id="email" type="email" name="email" placeholder="jane@company.com" required />
+
+            <label for="message">How can we help?</label>
+            <textarea id="message" name="message" placeholder="Tell us about your project..." required></textarea>
+
+            <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap;">
+              <button class="btn" type="submit">Send Message</button>
+              <a class="btn secondary" href="tel:+15555555555">Call: (555) 555-5555</a>
+            </div>
+
+            <p style="color:var(--muted);font-size:13px;margin:12px 0 0;">
+              By submitting, you agree to be contacted about your request.
+            </p>
+          </form>
+
+          <div class="card contact-info">
+            <h3>Business Info</h3>
+            <p>Replace these with your actual business details.</p>
+
+            <div class="info-row">📍 <span>City, State</span></div>
+            <div class="info-row">🕒 <span>Mon–Fri • 9am–5pm</span></div>
+            <div class="info-row">✉️ <span>hello@yourbusiness.com</span></div>
+            <div class="info-row">☎️ <span>(555) 555-5555</span></div>
+
+            <div class="pill" style="margin-top:14px;">
+              Tip: Add your Google Business Profile link here
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container foot">
+      <div>© <span id="year"></span> Your Business Name. All rights reserved.</div>
+      <div style="display:flex;gap:14px;flex-wrap:wrap;">
+        <a href="#services">Services</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+        <a href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">Back to top ↑</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
